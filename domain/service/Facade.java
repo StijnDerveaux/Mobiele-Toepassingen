@@ -13,7 +13,7 @@ import db.DbFactory;
 public class Facade {
 	private Db userDb;
 	private DbFactory fac = new DbFactory();
-
+	private static Facade instance = null;
 	public Facade() {
 		createDb("map");
 		User ad = new Admin();
@@ -94,6 +94,14 @@ public class Facade {
 		return stringParts[2];
 	}
 
+public static Facade getInstance(){
+		
+		if(instance == null){
+			instance = new Facade();
+		}
+		
+		return instance;
+	}
 	public void createDb(String type) {
 		userDb = fac.Create(type);
 
