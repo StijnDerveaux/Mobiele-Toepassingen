@@ -23,6 +23,7 @@ public class MapDb implements Db {
 
 		return us;
 	}
+	
 
 
 	@Override
@@ -64,6 +65,18 @@ public class MapDb implements Db {
 	public void closeConnection() {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+
+	@Override
+	public User getUser(int number) {
+		User u=null;
+		if(number == -1 || number >0){
+			
+			u=users.get(number);
+		}
+	return u;
 	}
 
 }

@@ -15,5 +15,5 @@ public interface Db {
 	public void removeUser(User user);
 	public void updateUser(User user);
 	public void closeConnection();
-
+public User getUser(int number);
 }

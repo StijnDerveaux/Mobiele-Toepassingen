@@ -1,8 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">StijnDerveauxKikkersprong</string>
+    <string name="app_name">Kikkersprong</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Algemene strings -->
+    <string name="Back">Back</string>
+
+    <!-- Child strings -->
+
+
+    <!-- Child Main page strings -->
+    <string name="Aankomst">Aankomst</string>
+    <string name="Vertrek">Vertrek</string>
+    <string name="Aanwezigheden">Toon aanwezigheden</string>
+    <string name="Bedragen">Toon de openstaande bedragen</string>
+
+    <!-- Child aanwezigheden page strings -->
+    <string name="TitelAanwezigheden">Overzicht aanwezigheden</string>
+    <string name="Datum">Datum</string>
+    <string name="Uren">Aantal uren</string>
+    <!-- Child Bedrag page strings -->
+    <string name="TitelBedragen">Overzicht bedragen</string>
+    <string name="Maand">Maand</string>
+    <string name="Betaald">Betaald</string>
+    <string name="Bedrag">Bedrag</string>
+
+    
+    <!-- Admin strings -->
+     <!-- Admin main page strings -->
+  
+      <string name="Naam">Naam</string>
+      <string name="OpenstaandeBedragen">Openstaande bedragen</string>
+      <string name="Factuur">Genereer facturen</string>
+      <string name="Aanmaningen">Genereer aanmaningen</string>
+      <string name="ToonBedragen">Bedragen</string>
+      <string name="ToonAanwezigheden">Aanwezigheden</string>
+      
+       <!-- Admin aanwezigheidpage strings -->
+      <string name="Admin">Back to admin page</string>
+    
 </resources>

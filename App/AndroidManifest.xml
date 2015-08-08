@@ -22,6 +22,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ChildActivity" >
+        </activity>
+        <activity android:name=".BedragenActivity" >
+        </activity>
+        <activity android:name=".AanwezighedenActivity" >
+        </activity>
+        <activity android:name=".AdminActivity" >
+        </activity>
+        <activity android:name=".AdminAanwezighedenActivity" >
+        </activity>
+        <activity android:name=".AdminBedragenActivity" >
+        </activity>
     </application>
 
 </manifest>

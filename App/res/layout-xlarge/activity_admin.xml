@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/adminColor"
+    android:orientation="vertical"
+    tools:context="com.example.stijnderveauxkikkersprong.AdminActivity" >
+
+    <LinearLayout
+        android:id="@+id/MainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/paper"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/tablet_basic_medium_high_padding"
+        android:paddingRight="@dimen/tablet_basic_medium_high_padding"
+        android:paddingTop="@dimen/tablet_basic_high_padding" >
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:scrollbars="none"
+             >
+
+            <TableLayout
+                android:id="@+id/TableLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:isScrollContainer="true"
+                android:orientation="vertical"
+                android:stretchColumns="1"
+                >
+
+                <TableRow
+                     
+                    android:layout_marginBottom="@dimen/tablet_activity_vertical_margin"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/Naam"
+                        android:gravity="center"
+                        android:text="@string/Naam"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <TextView
+                        android:id="@+id/OpenstaandeBedragen"
+                        android:gravity="left"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:text="@string/OpenstaandeBedragen"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                   
+                </TableRow>
+            </TableLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/tablet_basic_high_padding" 
+            android:layout_gravity="left">
+
+            <Button
+                android:id="@+id/btnFacturen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/Factuur" />
+
+            <Button
+                android:id="@+id/btnAanmaningen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/Aanmaningen" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

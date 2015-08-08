@@ -9,4 +9,14 @@
 	<dimen name="basic_medium_padding">10dp</dimen>   
 	<dimen name="basic_medium_high_padding">25dp</dimen>   
 	<dimen name="basic_high_padding">45dp</dimen>  
+	
+	
+	<dimen name="tablet_activity_horizontal_margin" >32dp</dimen>
+	<dimen name="tablet_activity_vertical_margin" >32dp</dimen>
+	
+	
+	    <!-- Default basic paddings -->
+	<dimen name="tablet_basic_medium_padding">20dp</dimen>   
+	<dimen name="tablet_basic_medium_high_padding">50dp</dimen>   
+	<dimen name="tablet_basic_high_padding">90dp</dimen>  
 </resources>
