@@ -18,11 +18,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:orientation="vertical"
-        android:background="@drawable/paperkids"
+        android:background="@drawable/paperscooter"
         android:paddingLeft="@dimen/basic_high_padding"
         android:paddingRight="@dimen/basic_medium_high_padding"
         android:paddingTop="@dimen/basic_high_padding" >
-  <RelativeLayout
+  <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical"
@@ -37,7 +37,7 @@
           android:layout_gravity="center"
           android:layout_marginBottom="@dimen/basic_medium_high_padding" />
       
-        </RelativeLayout>
+        </LinearLayout>
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
@@ -82,13 +82,13 @@
             </TableLayout>
            
         </ScrollView>
- <RelativeLayout
+ <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:orientation="vertical"
             android:layout_marginTop="@dimen/basic_medium_high_padding" 
-            android:layout_marginBottom="@dimen/basic_medium_high_padding" 
             android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/basic_medium_high_padding" 
             >
 
      <Button
@@ -97,9 +97,10 @@
          android:layout_height="wrap_content"
          android:text="@string/Back"
          android:gravity="center"
-         android:onClick="onClick" />
+         android:onClick="onClick"
+          />
         
-     </RelativeLayout>
+     </LinearLayout>
       
     </LinearLayout>
 

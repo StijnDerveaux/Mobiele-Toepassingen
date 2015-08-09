@@ -1,66 +1,64 @@
 package com.example.stijnderveauxkikkersprong;
 
-
-
-
 import service.Facade;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
-
-
+import android.widget.TextView;
+import android.view.View.OnClickListener;
 
 public class ChildActivity extends ActionBarActivity {
 	Facade facade;
-private int number;
+	private int number;
 	private Button aankomst;
 	private Button vertrek;
 	private Button aanwezigheden;
 	private Button bedragen;
 
-	
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_child);
-		
+
 		initLayoutComponents();
-		
 
 	}
+
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		/*if (v.equals(aankomst)) {
-		
+		if (v.equals(aankomst)) {
+			openDialog("Aankomst");
 
 		}
 		if (v.equals(vertrek)) {
-		
-		}*/
-		if(v.equals(aanwezigheden)){
-			
-			Intent i = new Intent(this,
-					AanwezighedenActivity.class);
-			
+			openDialog("Vertrek");
+		}
+		if (v.equals(aanwezigheden)) {
+
+			Intent i = new Intent(this, AanwezighedenActivity.class);
+
 			i.putExtra("number", number);
 			startActivity(i);
-			
+
 		}
-		if(v.equals(bedragen)){
-			
-			Intent i = new Intent(this,
-					BedragenActivity.class);
-			
+		if (v.equals(bedragen)) {
+
+			Intent i = new Intent(this, BedragenActivity.class);
+
 			i.putExtra("number", number);
 			startActivity(i);
-			
+
 		}
+
 	}
 
 	@Override
@@ -81,9 +79,15 @@ private int number;
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	
-	
+
+	private void openDialog(String tekst) {
+		String naam = facade.getVoornaam(facade.getUser(number));
+		CustomDialogClass cdd = new CustomDialogClass(ChildActivity.this, naam,
+				tekst);
+		cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+		cdd.show();
+	}
+
 	private void initLayoutComponents() {
 		// TODO Auto-generated method stub
 		facade = Facade.getInstance();
@@ -91,24 +95,23 @@ private int number;
 		vertrek = (Button) findViewById(R.id.btnVertrek);
 		aanwezigheden = (Button) findViewById(R.id.btnAanwezigheden);
 		bedragen = (Button) findViewById(R.id.btnBedragen);
-	
-		
-		Intent in=getIntent();
-		 number=in.getIntExtra("number", 0);
-		
+
+		Intent in = getIntent();
+		number = in.getIntExtra("number", 0);
 
 	}
-	 @Override
-	    public void onResume(){
-	        super.onResume();
-	        
-	    }
 
-	    @Override
-	    public void onBackPressed(){
-	        super.onBackPressed();
-	        Intent intent = new Intent(this, MainActivity.class);
-	        startActivity(intent);
-	        finish();
-	    }
+	@Override
+	public void onResume() {
+		super.onResume();
+
+	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		Intent intent = new Intent(this, MainActivity.class);
+		startActivity(intent);
+		finish();
+	}
 }

@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    
+     android:background="@drawable/curve_shape"
+    android:paddingLeft="@dimen/basic_medium_padding"
+    android:paddingRight="@dimen/basic_medium_padding"
+    android:paddingTop="@dimen/basic_medium_padding"
+   
+  >
+ 
+
+<LinearLayout
+    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        
+    <com.example.stijnderveauxkikkersprong.GifView 
+        android:id="@+id/gif_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_gravity="center"/>
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginTop="@dimen/basic_medium_high_padding" 
+        android:id="@+id/lblText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/basic_medium_high_padding" 
+     
+        />
+
+     <Button
+        android:id="@+id/btnBackDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Back"
+      android:layout_gravity="center"
+       
+        
+        
+        />
+</LinearLayout>    
+</RelativeLayout>
