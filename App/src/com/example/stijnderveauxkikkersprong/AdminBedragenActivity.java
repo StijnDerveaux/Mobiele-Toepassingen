@@ -2,7 +2,7 @@ package com.example.stijnderveauxkikkersprong;
 
 import model.Bedragen;
 import model.Child;
-import model.User;
+
 import service.Facade;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +22,7 @@ public class AdminBedragenActivity extends ActionBarActivity {
 	private int number;
 	private TableLayout table;
 	private Button back;
+	private TextView bed;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,7 @@ public class AdminBedragenActivity extends ActionBarActivity {
 		facade = Facade.getInstance();
 		back = (Button) findViewById(R.id.btnBack);
 		table = (TableLayout) findViewById(R.id.TableLayout);
+		bed=(TextView)findViewById(R.id.lblBedragen);
 		Intent in = getIntent();
 		number = in.getIntExtra("number", 0);
 		generateTable();
@@ -96,6 +98,8 @@ public class AdminBedragenActivity extends ActionBarActivity {
 
 			table.addView(tbrow);
 		}
+		String tekst= bed.getText() + " : " + c.getNaam() + " " + c.getVoornaam();
+		bed.setText(tekst);
 	}
 
 	@Override

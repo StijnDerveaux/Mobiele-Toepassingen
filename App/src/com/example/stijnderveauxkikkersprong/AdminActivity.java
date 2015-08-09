@@ -1,6 +1,6 @@
 package com.example.stijnderveauxkikkersprong;
 
-import model.Aanwezigheden;
+
 import model.Bedragen;
 import model.Child;
 import model.User;
@@ -12,11 +12,10 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
+
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
+
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -25,7 +24,7 @@ public class AdminActivity extends ActionBarActivity implements
 		View.OnClickListener {
 
 	private Facade facade;
-	private int number;
+
 	private TableLayout table;
 	private Button factuur;
 	private Button aanmaning;

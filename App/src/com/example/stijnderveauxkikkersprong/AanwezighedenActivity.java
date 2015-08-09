@@ -3,7 +3,7 @@ package com.example.stijnderveauxkikkersprong;
 import model.Aanwezigheden;
 import model.Child;
 import service.Facade;
-import android.app.ActionBar.LayoutParams;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;

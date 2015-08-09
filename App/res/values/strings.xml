@@ -40,5 +40,9 @@
       
        <!-- Admin aanwezigheidpage strings -->
       <string name="Admin">Back to admin page</string>
+      <string name="OverzichtAan">Aanwezigheden overzicht van</string>
+      
+      <!-- Bedragen strings -->
+      <string name="OverzichtBed">Bedragen overzicht van</string>
     
 </resources>

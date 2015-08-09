@@ -1,6 +1,6 @@
 package com.example.stijnderveauxkikkersprong;
 
-import model.Admin;
+
 import model.Child;
 import model.QrCode;
 
@@ -20,7 +20,7 @@ import android.view.MenuItem;
 public class MainActivity extends ActionBarActivity {
 	private Facade facade;
 	private Child c;
-	private Admin a;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

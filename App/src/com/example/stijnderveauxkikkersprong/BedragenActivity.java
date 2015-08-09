@@ -1,11 +1,10 @@
 package com.example.stijnderveauxkikkersprong;
 
-import model.Aanwezigheden;
+
 import model.Bedragen;
 import model.Child;
 import service.Facade;
-import android.annotation.SuppressLint;
-import android.app.ActionBar.LayoutParams;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -15,7 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.RelativeLayout;
+
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -76,7 +75,7 @@ public class BedragenActivity extends ActionBarActivity {
 
 
 	private void generateTable() {
-		TextView betaald = (TextView) findViewById(R.id.Betaald);
+
 		Child c=(Child)facade.getUser(number);
 		
 		

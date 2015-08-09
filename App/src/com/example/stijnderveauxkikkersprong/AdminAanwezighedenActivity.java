@@ -1,7 +1,7 @@
 package com.example.stijnderveauxkikkersprong;
 
 import model.Aanwezigheden;
-import model.Bedragen;
+
 import model.Child;
 import service.Facade;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
+
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -22,6 +22,7 @@ public class AdminAanwezighedenActivity extends ActionBarActivity {
 	private int number;
 	private TableLayout table;
 	private Button back;
+	private TextView aan;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,7 @@ public class AdminAanwezighedenActivity extends ActionBarActivity {
 		facade = Facade.getInstance();
 		back = (Button) findViewById(R.id.btnBack);
 		table = (TableLayout) findViewById(R.id.TableLayout);
+		aan=(TextView)findViewById(R.id.lblAanwezigheden);
 		Intent in = getIntent();
 		number = in.getIntExtra("number", 0);
 		generateTable();
@@ -91,6 +93,8 @@ Child c=(Child)facade.getUser(number);
 
 			table.addView(tbrow);
 		}
+		String tekst= aan.getText() + " : " + c.getNaam() + " " + c.getVoornaam();
+		aan.setText(tekst);
 	}
 
 	@Override

@@ -21,18 +21,49 @@ public class Facade {
 		Child u1 = new Child("Olive", "Nikki");
 		Child u2 = new Child("Derveaux", "Stijn");
 		Child u3 = new Child("De", "Held");
+		Child u4 = new Child("Tom", "Boonen");
+		Child u5 = new Child("Groen", "Veld");
+		Child u6 = new Child("Paarse", "Held");
+		Child u7 = new Child("Waarom", "Niet");
+		Child u8 = new Child("Peeters", "Hans");
+		
+		
 		int dag = 5;
 		String maand = "JANUARY";
 		int uren = 3;
 		u1.addAanwezigheid(dag, maand, uren);
 		u1.addAanwezigheid(7, "JANUARY", 1);
+		u1.addAanwezigheid(9, "JANUARY", 10);
+		u1.addAanwezigheid(11, "JANUARY", 8);
+		u1.addAanwezigheid(12, "JANUARY", 17);
+		u1.addAanwezigheid(14, "JANUARY", 17);
+		u1.addAanwezigheid(17, "JANUARY", 20);
+		u1.addAanwezigheid(18, "JANUARY", 17);
+		u1.addAanwezigheid(20, "JANUARY", 25);
 
 		u1.addBedrag("JANUARY", 10, false);
 		u1.addBedrag("February", 5, false);
+		u1.addBedrag("MARCH", 20, true);
+		u1.addBedrag("April", 105, true);
+		u1.addBedrag("May", 100, false);
+		u1.addBedrag("JUNE", 75, false);
+		u1.addBedrag("JULY", 910, false);
+		u1.addBedrag("AUGUST", 30, true);
+		u1.addBedrag("SEPTEMBER", 51, false);
+		u1.addBedrag("OCTOBER", 100, false);
+		u1.addBedrag("NOVEMBER", 50, true);
+		u1.addBedrag("DECEMBER", 70, true);
 		
+		u2.addBedrag("JANUARY", 10, true);
 		addUser(u1);
 		addUser(u2);
 		addUser(u3);
+		addUser(u4);
+		addUser(u5);
+		addUser(u6);
+		addUser(u7);
+		addUser(u8);
+		
 	}
 
 	public User getUser(QrCode q) {

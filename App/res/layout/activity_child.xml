@@ -51,7 +51,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/Aankomst"
-                android:onClick="onClick" />
+                android:onClick="onClick" 
+                android:layout_marginTop="@dimen/basic_high_padding"/>
 
             <Button
                 android:id="@+id/btnVertrek"
@@ -74,7 +75,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/basic_medium_high_padding"
                 android:text="@string/Aanwezigheden"
-                android:onClick="onClick"/>
+                android:onClick="onClick"
+                />
 
             <Button
                 android:id="@+id/btnBedragen"
@@ -82,7 +84,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/basic_medium_high_padding"
                 android:text="@string/Bedragen"
-                android:onClick="onClick" />
+                android:onClick="onClick"
+                />
         </LinearLayout>
     </LinearLayout>
 
