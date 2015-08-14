@@ -37,6 +37,7 @@
       <string name="Aanmaningen">Genereer aanmaningen</string>
       <string name="ToonBedragen">Bedragen</string>
       <string name="ToonAanwezigheden">Aanwezigheden</string>
+      <string name="Login">Login</string>
       
        <!-- Admin aanwezigheidpage strings -->
       <string name="Admin">Back to admin page</string>

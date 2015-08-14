@@ -4,6 +4,10 @@ import model.Bedragen;
 import model.Child;
 
 import service.Facade;
+
+import com.dropbox.client2.DropboxAPI;
+import com.dropbox.client2.android.AndroidAuthSession;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -22,8 +26,9 @@ public class AdminBedragenActivity extends ActionBarActivity {
 	private int number;
 	private TableLayout table;
 	private Button back;
+	private Button login,fac,aanm;
 	private TextView bed;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,6 +73,7 @@ public class AdminBedragenActivity extends ActionBarActivity {
 		bed=(TextView)findViewById(R.id.lblBedragen);
 		Intent in = getIntent();
 		number = in.getIntExtra("number", 0);
+		
 		generateTable();
 
 	}

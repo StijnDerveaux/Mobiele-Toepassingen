@@ -6,13 +6,12 @@
 
     <uses-sdk
         android:minSdkVersion="10"
-        android:targetSdkVersion="19" />
+        android:targetSdkVersion="21" />
     <!-- internet verbinding nodig -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-     <uses-permission android:name="android.permission.CAMERA" />
- 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -25,8 +24,7 @@
             android:hardwareAccelerated="false" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-<!-- Change this to be db- followed by your app key voor dropbox -->
-                <data android:scheme="db-dsdwkslphr3p0wj" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -35,12 +33,27 @@
             android:hardwareAccelerated="false" >
 >
         </activity>
+        <activity
+            android:name="com.dropbox.client2.android.AuthActivity"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask" >
+>
+            <intent-filter>
+
+                <!-- Change this to be db- followed by your app key voor dropbox -->
+                <data android:scheme="db-dsdwkslphr3p0wj" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".BedragenActivity" >
         </activity>
         <activity android:name=".AanwezighedenActivity" >
         </activity>
-        <activity android:name=".AdminActivity"
-             >
+        <activity android:name=".AdminActivity" >
         </activity>
         <activity android:name=".AdminAanwezighedenActivity" >
         </activity>
