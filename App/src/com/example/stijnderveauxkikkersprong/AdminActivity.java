@@ -47,7 +47,7 @@ public class AdminActivity extends ActionBarActivity implements View.OnClickList
 	private static final String APP_KEY = "dsdwkslphr3p0wj";
 	private static final String APP_SECRET = "3wl2xtz5q9dwvnd";
 	private DropboxAPI<AndroidAuthSession> mDBApi;
-	private final static String DROPBOX_DIR = "/Photos/";
+	private final static String DROPBOX_DIR = "/files/";
 	private final static String DROPBOX_NAME = "dropbox_prefs";
 	private final static AccessType ACCESS_TYPE = AccessType.DROPBOX;
 	private boolean isLoggedIn = false;;
