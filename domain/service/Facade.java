@@ -31,15 +31,18 @@ public class Facade {
 		int dag = 5;
 		String maand = "JANUARY";
 		int uren = 3;
-		u1.addAanwezigheid(dag, maand, uren);
-		u1.addAanwezigheid(7, "JANUARY", 1);
-		u1.addAanwezigheid(9, "JANUARY", 10);
-		u1.addAanwezigheid(11, "JANUARY", 8);
-		u1.addAanwezigheid(12, "JANUARY", 17);
-		u1.addAanwezigheid(14, "JANUARY", 17);
-		u1.addAanwezigheid(17, "JANUARY", 20);
-		u1.addAanwezigheid(18, "JANUARY", 17);
-		u1.addAanwezigheid(20, "JANUARY", 25);
+		
+		
+		
+		u1.addAanwezigheid2(dag, maand, uren,5);
+		u1.addAanwezigheid2(7, "JANUARY", 1,6);
+		u1.addAanwezigheid2(9, "JANUARY", 10,12);
+		u1.addAanwezigheid2(11, "JANUARY", 8,10);
+		u1.addAanwezigheid2(12, "JANUARY", 17,19);
+		u1.addAanwezigheid2(14, "JANUARY", 17,19);
+		u1.addAanwezigheid2(17, "JANUARY", 20,24);
+		u1.addAanwezigheid2(18, "JANUARY", 17,21);
+		u1.addAanwezigheid2(20, "JANUARY", 8,15);
 
 		u1.addBedrag("JANUARY", 10, false);
 		u1.addBedrag("February", 5, false);

@@ -13,9 +13,9 @@ public class Child implements User {
 
 	public Child(String naam, String voornaam) {
 		setNaam(naam);
-		
+
 		setVoornaam(voornaam);
-		//setQrCode(number, naam, voornaam);
+		// setQrCode(number, naam, voornaam);
 	}
 
 	@Override
@@ -66,18 +66,28 @@ public class Child implements User {
 		boolean gelijk = false;
 		if (object != null && object instanceof Child) {
 			Child aan = (Child) (object);
-			if (this.getNumber()==aan.getNumber()) {
+			if (this.getNumber() == aan.getNumber()) {
 				gelijk = true;
 			}
 		}
 		return gelijk;
 	}
 
-	public void addAanwezigheid(int dag, String maand, int uren) {
-		if (dag > 0 && dag < 32 && maand != null && uren >= 0) {
-			Aanwezigheden aan = new Aanwezigheden(dag, maand, uren);
+	public void addAanwezigheid2(int dag, String maand, int aankomst,int vertrek) {
+		if (dag > 0 && dag < 32 && maand != null && aankomst >= 0 && vertrek >aankomst ) {
+			Aanwezigheden aan = new Aanwezigheden(dag, maand,  aankomst, vertrek);
 			aanwezigheden.add(aan);
 		}
+	}
+
+	public void addAanwezigheid(Aanwezigheden aanwezigheden) {
+		if (this.aanwezigheden.contains(aanwezigheden)) {
+
+			this.aanwezigheden.remove(aanwezigheden);
+
+		}
+		this.aanwezigheden.add(aanwezigheden);
+
 	}
 
 	public void addBedrag(String maand, int bedrag, boolean betaald) {
@@ -95,6 +105,17 @@ public class Child implements User {
 
 	public List<Bedragen> getBedragen() {
 		return bedragen;
+	}
+
+	public Aanwezigheden getAanwezigheid(Aanwezigheden a) {
+		Aanwezigheden uitvoer = null;
+		for (Aanwezigheden aan : getAanwezigheden()) {
+			if (a.equals(aan)) {
+				uitvoer = aan;
+			}
+
+		}
+		return uitvoer;
 	}
 
 }

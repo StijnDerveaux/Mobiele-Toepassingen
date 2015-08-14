@@ -8,7 +8,12 @@
         android:minSdkVersion="10"
         android:targetSdkVersion="19" />
     <!-- internet verbinding nodig -->
-<uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+     <uses-permission android:name="android.permission.CAMERA" />
+ 
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_kikkersprong"
@@ -20,24 +25,27 @@
             android:hardwareAccelerated="false" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+<!-- Change this to be db- followed by your app key voor dropbox -->
+                <data android:scheme="db-dsdwkslphr3p0wj" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ChildActivity" 
-            android:hardwareAccelerated="false" >>
+        <activity
+            android:name=".ChildActivity"
+            android:hardwareAccelerated="false" >
+>
         </activity>
         <activity android:name=".BedragenActivity" >
         </activity>
         <activity android:name=".AanwezighedenActivity" >
         </activity>
-        <activity android:name=".AdminActivity" >
+        <activity android:name=".AdminActivity"
+             >
         </activity>
         <activity android:name=".AdminAanwezighedenActivity" >
         </activity>
         <activity android:name=".AdminBedragenActivity" >
         </activity>
-        
     </application>
 
 </manifest>

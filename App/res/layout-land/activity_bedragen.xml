@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:background="@drawable/paperscooter"
+        android:background="@drawable/paperkids"
         android:orientation="vertical"
         android:paddingLeft="@dimen/basic_high_padding"
         android:paddingRight="@dimen/basic_medium_high_padding"

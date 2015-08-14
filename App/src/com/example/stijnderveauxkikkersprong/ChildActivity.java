@@ -1,12 +1,24 @@
 package com.example.stijnderveauxkikkersprong;
 
 import service.Facade;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +34,7 @@ public class ChildActivity extends ActionBarActivity {
 	private Button vertrek;
 	private Button aanwezigheden;
 	private Button bedragen;
+	private TextView text;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +95,7 @@ public class ChildActivity extends ActionBarActivity {
 
 	private void openDialog(String tekst) {
 		String naam = facade.getVoornaam(facade.getUser(number));
-		CustomDialogClass cdd = new CustomDialogClass(ChildActivity.this, naam,
-				tekst);
+		CustomDialogClass cdd = new CustomDialogClass(ChildActivity.this, naam, tekst);
 		cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 		cdd.show();
 	}
@@ -95,9 +107,14 @@ public class ChildActivity extends ActionBarActivity {
 		vertrek = (Button) findViewById(R.id.btnVertrek);
 		aanwezigheden = (Button) findViewById(R.id.btnAanwezigheden);
 		bedragen = (Button) findViewById(R.id.btnBedragen);
+		
 
 		Intent in = getIntent();
 		number = in.getIntExtra("number", 0);
+		// File f = getFilesDir();
+		// String path = f.getAbsolutePath();
+
+
 
 	}
 
@@ -114,4 +131,6 @@ public class ChildActivity extends ActionBarActivity {
 		startActivity(intent);
 		finish();
 	}
+
+	
 }

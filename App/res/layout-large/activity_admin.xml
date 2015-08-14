@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/paper"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/basic_medium_high_padding"
+        android:paddingLeft="@dimen/tablet_basic_high_padding"
         android:paddingRight="@dimen/basic_medium_high_padding"
         android:paddingTop="@dimen/tablet_basic_high_padding"
         >

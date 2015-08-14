@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:orientation="vertical"
-        android:background="@drawable/paperscooter"
+        android:background="@drawable/paperkids"
         android:paddingLeft="@dimen/basic_medium_high_padding"
         android:paddingRight="@dimen/basic_medium_high_padding"
         android:paddingTop="@dimen/basic_high_padding"
@@ -87,7 +87,9 @@
                 android:text="@string/Bedragen"
                 android:onClick="onClick"
                 />
+            
         </LinearLayout>
+        
     </LinearLayout>
 
 
