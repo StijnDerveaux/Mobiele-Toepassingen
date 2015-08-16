@@ -148,6 +148,7 @@ public class MainActivity extends ActionBarActivity {
 		}
 		else{
 			finish();
+			
 		}
 		
 	}
@@ -332,6 +333,7 @@ public class MainActivity extends ActionBarActivity {
 			return params[0].GetAllBedragen();
 		}
 	}
+	
 	
 
 }

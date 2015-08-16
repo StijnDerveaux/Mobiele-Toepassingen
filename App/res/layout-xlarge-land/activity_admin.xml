@@ -5,24 +5,18 @@
     android:layout_height="match_parent"
     android:background="@color/adminColor"
     android:orientation="vertical"
-    tools:context="com.example.stijnderveauxkikkersprong.AdminBedragenActivity" >
+    tools:context="com.example.stijnderveauxkikkersprong.AdminActivity" >
 
     <LinearLayout
         android:id="@+id/MainLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_gravity="center"
         android:background="@drawable/paper"
+        android:orientation="vertical"
         android:paddingLeft="@dimen/tablet_basic_high_padding"
-        android:paddingRight="@dimen/tablet_basic_medium_high_padding"
+        android:paddingRight="@dimen/tablet_basic_high_padding"
         android:paddingTop="@dimen/tablet_basic_high_padding" >
-
-        <TextView
-            android:id="@+id/lblBedragen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/OverzichtBed"
-            android:layout_marginBottom="@dimen/tablet_activity_vertical_margin" />
 
         <ScrollView
             android:id="@+id/scrollView"
@@ -39,30 +33,26 @@
                 android:isScrollContainer="true"
                 android:orientation="vertical"
                 android:stretchColumns="1"
-                 >
+                >
 
                 <TableRow
+                     
                     android:layout_marginBottom="@dimen/tablet_activity_vertical_margin"
                     android:orientation="horizontal" >
 
                     <TextView
-                        android:id="@+id/Maand"
+                        android:id="@+id/Naam"
                         android:gravity="center"
-                        android:text="@string/Maand"
+                        android:text="@string/Naam"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                      <TextView
-                        android:id="@+id/Betaald"
-                        android:gravity="center"
-                        android:text="@string/Betaald"
+                    <TextView
+                        android:id="@+id/OpenstaandeBedragen"
+                        android:gravity="left"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:text="@string/OpenstaandeBedragen"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                      <TextView
-                          android:id="@+id/OpenstaandeBedragen"
-                          android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                          android:gravity="left"
-                          android:text="@string/OpenstaandeBedragen"
-                          android:textAppearance="?android:attr/textAppearanceMedium" />
                    
                 </TableRow>
             </TableLayout>
@@ -73,18 +63,34 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingTop="@dimen/tablet_basic_high_padding" 
-            android:layout_gravity="left"
-            android:layout_marginBottom="@dimen/basic_high_padding" >
+            android:layout_gravity="left">
 
-          
-
-          <Button
-                android:id="@+id/btnBack"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+               <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="onClick"
-                android:text="@string/Admin" />
+                android:text="@string/Login"
+                android:layout_marginBottom="@dimen/basic_high_padding" 
+                 />
+            <Button
+                android:id="@+id/btnFacturen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/Factuur"
+                android:layout_marginBottom="@dimen/basic_high_padding" 
+                 />
+         
+
+            <Button
+                android:id="@+id/btnAanmaningen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/Aanmaningen"
+                android:layout_marginBottom="@dimen/basic_high_padding" 
+                 />
         </LinearLayout>
     </LinearLayout>
 

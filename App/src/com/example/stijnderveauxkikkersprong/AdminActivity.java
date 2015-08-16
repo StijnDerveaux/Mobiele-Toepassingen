@@ -266,8 +266,10 @@ public class AdminActivity extends ActionBarActivity implements View.OnClickList
 	public void onBackPressed() {
 		super.onBackPressed();
 		Intent intent = new Intent(this, MainActivity.class);
-		startActivity(intent);
 		finish();
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+		
 	}
 
 }

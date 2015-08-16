@@ -5,32 +5,31 @@
     android:layout_height="match_parent"
     android:background="@color/adminColor"
     android:orientation="vertical"
-    tools:context="com.example.stijnderveauxkikkersprong.AdminBedragenActivity" >
+    tools:context="com.example.stijnderveauxkikkersprong.AdminAanwezighedenActivity" >
 
     <LinearLayout
         android:id="@+id/MainLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:background="@drawable/paper"
+        android:orientation="vertical"
         android:paddingLeft="@dimen/tablet_basic_high_padding"
         android:paddingRight="@dimen/tablet_basic_medium_high_padding"
         android:paddingTop="@dimen/tablet_basic_high_padding" >
 
         <TextView
-            android:id="@+id/lblBedragen"
+            android:id="@+id/lblAanwezigheden"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/OverzichtBed"
-            android:layout_marginBottom="@dimen/tablet_activity_vertical_margin" />
+            android:layout_marginBottom="@dimen/tablet_activity_vertical_margin"
+            android:text="@string/OverzichtAan" />
 
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:scrollbars="vertical"
-             >
+            android:scrollbars="vertical" >
 
             <TableLayout
                 android:id="@+id/TableLayout"
@@ -38,32 +37,24 @@
                 android:layout_height="wrap_content"
                 android:isScrollContainer="true"
                 android:orientation="vertical"
-                android:stretchColumns="1"
-                 >
+                android:stretchColumns="1" >
 
                 <TableRow
                     android:layout_marginBottom="@dimen/tablet_activity_vertical_margin"
                     android:orientation="horizontal" >
 
                     <TextView
-                        android:id="@+id/Maand"
+                        android:id="@+id/Datum"
                         android:gravity="center"
-                        android:text="@string/Maand"
+                        android:text="@string/Datum"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                      <TextView
-                        android:id="@+id/Betaald"
+                    <TextView
+                        android:id="@+id/Uren"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
                         android:gravity="center"
-                        android:text="@string/Betaald"
+                        android:text="@string/Uren"
                         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                      <TextView
-                          android:id="@+id/OpenstaandeBedragen"
-                          android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                          android:gravity="left"
-                          android:text="@string/OpenstaandeBedragen"
-                          android:textAppearance="?android:attr/textAppearanceMedium" />
-                   
                 </TableRow>
             </TableLayout>
         </ScrollView>
@@ -71,14 +62,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/basic_high_padding"
             android:orientation="horizontal"
-            android:paddingTop="@dimen/tablet_basic_high_padding" 
-            android:layout_gravity="left"
-            android:layout_marginBottom="@dimen/basic_high_padding" >
+            android:paddingTop="@dimen/tablet_basic_high_padding" >
 
-          
-
-          <Button
+            <Button
                 android:id="@+id/btnBack"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

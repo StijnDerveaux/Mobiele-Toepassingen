@@ -116,7 +116,8 @@ public class BedragenActivity extends ActionBarActivity {
 	public void back(){
 		Intent intent = new Intent(this, ChildActivity.class);
 		intent.putExtra("number", number);
-		startActivity(intent);
 		finish();
+		startActivity(intent);
+		
 	}
 }

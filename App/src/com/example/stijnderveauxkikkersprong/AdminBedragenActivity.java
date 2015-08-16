@@ -122,7 +122,8 @@ public class AdminBedragenActivity extends ActionBarActivity {
 
 	public void back() {
 		Intent intent = new Intent(this, AdminActivity.class);
-		startActivity(intent);
 		finish();
+		startActivity(intent);
+		
 	}
 }

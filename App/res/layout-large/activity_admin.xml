@@ -11,11 +11,11 @@
        
         android:id="@+id/MainLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/paper"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/tablet_basic_high_padding"
-        android:paddingRight="@dimen/basic_medium_high_padding"
+        android:paddingLeft="@dimen/basic_high_padding"
+        android:paddingRight="@dimen/basic_medium_padding"
         android:paddingTop="@dimen/tablet_basic_high_padding"
         >
 

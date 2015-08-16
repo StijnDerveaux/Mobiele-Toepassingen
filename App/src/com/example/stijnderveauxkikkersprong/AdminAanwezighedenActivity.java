@@ -111,7 +111,8 @@ Child c=(Child)facade.getUser(number);
 
 	public void back() {
 		Intent intent = new Intent(this, AdminActivity.class);
-		startActivity(intent);
 		finish();
+		startActivity(intent);
+		
 	}
 }

@@ -369,7 +369,7 @@ public class ChildActivity extends ActionBarActivity {
 							}
 						} else {
 
-							aanwezigheid = fillAanwezigheidJsonObject(number, aan.getMaand().toString(), aan.getDag(),
+							aanwezigheid = fillAanwezigheidJsonObject(num, aan.getMaand().toString(), aan.getDag(),
 									aan.getAankomstUur(), aan.getVertrekUur());
 							data.put(aanwezigheid);
 							leeg = false;
@@ -406,8 +406,10 @@ public class ChildActivity extends ActionBarActivity {
 	public void onBackPressed() {
 		super.onBackPressed();
 		Intent intent = new Intent(this, MainActivity.class);
-		startActivity(intent);
 		finish();
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
+	
 	}
 
 	private boolean haveNetworkConnection() {
