@@ -11,6 +11,7 @@ public class Bedragen {
 		setBetaald(betaald);
 	}
 
+
 	public Month getMaand() {
 		return maand;
 	}

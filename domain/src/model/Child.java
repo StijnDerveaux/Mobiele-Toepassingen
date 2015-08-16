@@ -98,6 +98,16 @@ public class Child implements User {
 		}
 
 	}
+	
+	public void addBedrag2(Bedragen b) {
+		if (this.bedragen.contains(b)) {
+
+			this.bedragen.remove(b);
+
+		}
+		this.bedragen.add(b);
+
+	}
 
 	public List<Aanwezigheden> getAanwezigheden() {
 		return aanwezigheden;

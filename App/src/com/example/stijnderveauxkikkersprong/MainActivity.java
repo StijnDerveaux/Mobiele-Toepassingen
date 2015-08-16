@@ -1,14 +1,17 @@
 package com.example.stijnderveauxkikkersprong;
 
-
+import model.Aanwezigheden;
+import model.Bedragen;
 import model.Child;
 import model.QrCode;
-
+import model.User;
 import service.Facade;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,6 +21,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import android.support.v7.app.ActionBarActivity;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -27,13 +31,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-
+import domain.DbConnector;
 
 public class MainActivity extends ActionBarActivity {
 	private Facade facade;
 	private Child c;
 
+	private final Map<Integer, Child> users = new HashMap<>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,8 @@ public class MainActivity extends ActionBarActivity {
 		IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
 		integrator.initiateScan();
 		facade = Facade.getInstance();
-
+		if(!facade.isFetched()){
+		getTasks();}
 	}
 
 	@Override
@@ -67,8 +72,7 @@ public class MainActivity extends ActionBarActivity {
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		IntentResult scanResult = IntentIntegrator.parseActivityResult(
-				requestCode, resultCode, intent);
+		IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 		if (scanResult != null) {
 			// handle scan result
 			String t = scanResult.getContents().toString();
@@ -77,7 +81,12 @@ public class MainActivity extends ActionBarActivity {
 				if (qr.getCode().equals("-1")) {
 					toAdmin(-1);
 				} else {
-					c = (Child) facade.getUser(qr);
+					 c = (Child) facade.getUser(qr);
+					String[] stringParts = qr.getCode().split("/");
+
+					int nummer = Integer.parseInt(stringParts[0]);
+					//c = users.get(nummer);
+
 					toChild(c.getNumber());
 				}
 			}
@@ -93,9 +102,9 @@ public class MainActivity extends ActionBarActivity {
 	}
 
 	public void toAdmin(int number) {
-		 Intent intent = new Intent(this, AdminActivity.class);
-		 
-		 startActivity(intent);
+		Intent intent = new Intent(this, AdminActivity.class);
+
+		startActivity(intent);
 	}
 
 	public QrCode splitQRCode(String text) {
@@ -112,48 +121,6 @@ public class MainActivity extends ActionBarActivity {
 		}
 		return q;
 	}
-	
-	
-	// nogAanpassen
-	private class PrefetchData extends AsyncTask<Void, Void, Void> {
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			// before making http calls
-
-		}
-
-		@Override
-		protected Void doInBackground(Void... arg0) {
-			/*
-			 * Will make http call here This call will download required data
-			 * before launching the app example: 1. Downloading and storing in
-			 * SQLite 2. Downloading images 3. Fetching and parsing the xml /
-			 * json 4. Sending device information to server 5. etc.,
-			 */
-			if (isOnline()) {
-				facade.createDb("online");
-			} else {
-				facade.createDb("map");
-			}
-			
-
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Void result) {
-			super.onPostExecute(result);
-			// After completing http call
-			// will close this activity and lauch main activity
-	
-
-			// close this activity
-			finish();
-		}
-
-	}
 
 	private boolean isOnline() {
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -161,4 +128,140 @@ public class MainActivity extends ActionBarActivity {
 		return netInfo != null && netInfo.isConnectedOrConnecting();
 	}
 
+	
+	private void setAan(JSONArray arrayAanwezigheden) {
+	
+		for (int i = 0; i < arrayAanwezigheden.length(); i++) {
+
+			JSONObject json = null;
+			try {
+				json = arrayAanwezigheden.getJSONObject(i);
+				int GbN =json.getInt("GbNummer");
+				Child child=(Child)facade.getUser(GbN);
+					Aanwezigheden aan=new Aanwezigheden(json.getInt("Dag"), json.getString("Maand"), json.getInt("AankomstUur"), json.getInt("VertrekUur"));
+					child.addAanwezigheid(aan);
+					facade.updateUser(child);
+				
+		
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+
+
+	
+
+	private void setBedragen(JSONArray arrayBedragen) {
+		for (int i = 0; i < arrayBedragen.length(); i++) {
+
+			JSONObject json = null;
+			try {
+				json = arrayBedragen.getJSONObject(i);
+				int GbN =json.getInt("GbNummer");
+				Child child=(Child)facade.getUser(GbN);
+				
+					int be=json.getInt("Betaald");
+					boolean betaald= false;
+					if(be==1){
+						betaald=true;
+					}
+					String month=json.getString("Maand");
+					int bedrag=json.getInt("Bedrag");
+					Bedragen b= new Bedragen(month, bedrag, betaald);
+					
+					child.addBedrag2(b);
+					facade.updateUser(child);
+				
+		
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+		}
+	}
+
+	public void setChilds(JSONArray jsonArray) {
+		
+		for (int i = 0; i < jsonArray.length(); i++) {
+			Child ch = new Child("", "");
+			JSONObject json = null;
+			try {
+				json = jsonArray.getJSONObject(i);
+
+				ch.setNaam(json.getString("Naam"));
+				ch.setVoornaam(json.getString("Voornaam"));
+				ch.setNumber(json.getInt("GbNummer"));
+				
+				//setAan(c);
+				//setBedragen(c);
+				//users.put(c.getNumber(), c);
+				facade.addUser(ch);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+
+	private void getTasks() {
+		new GetAllUsersTask().execute(new DbConnector());
+		new GetAllBedragenTask().execute(new DbConnector());
+		new GetAllAanwezighedenTask().execute(new DbConnector());
+		facade.setFetched(true);
+	}
+
+	private class GetAllUsersTask extends AsyncTask<DbConnector, Long, JSONArray> {
+
+		@Override
+		protected void onPostExecute(JSONArray jsonArray) {
+
+			// setTextToTextView(jsonArray);
+			setChilds(jsonArray);
+
+		}
+
+		@Override
+		protected JSONArray doInBackground(DbConnector... params) {
+			// TODO Auto-generated method stub
+			return params[0].GetAllUsers();
+		}
+	}
+
+	private class GetAllAanwezighedenTask extends AsyncTask<DbConnector, Long, JSONArray> {
+
+		@Override
+		protected void onPostExecute(JSONArray jsonArray) {
+
+			// setTextToTextView(jsonArray);
+			setAan(jsonArray);;
+
+		}
+
+		@Override
+		protected JSONArray doInBackground(DbConnector... params) {
+			// TODO Auto-generated method stub
+			return params[0].GetAllAanwezigheden();
+		}
+	}
+
+	private class GetAllBedragenTask extends AsyncTask<DbConnector, Long, JSONArray> {
+
+		@Override
+		protected void onPostExecute(JSONArray jsonArray) {
+
+			// setTextToTextView(jsonArray);
+			setBedragen(jsonArray);
+
+		}
+
+		@Override
+		protected JSONArray doInBackground(DbConnector... params) {
+			// TODO Auto-generated method stub
+			return params[0].GetAllBedragen();
+		}
+	}
 }

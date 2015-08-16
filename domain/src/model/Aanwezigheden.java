@@ -28,6 +28,11 @@ public class Aanwezigheden {
 		uren = 0;
 		
 	}
+	public Aanwezigheden(int aankomst) {
+		setAankomstUur(aankomst);
+		uren = 0;
+		
+	}
 	
 	public Aanwezigheden(Date aankomst,Date vertrek) {
 		setAankomst(aankomst);
@@ -106,6 +111,7 @@ public class Aanwezigheden {
 	}
 
 	public void setUren(int uren) {
+		
 		this.uren = uren;
 	}
 
@@ -220,9 +226,10 @@ public class Aanwezigheden {
 
 	private void setAantalUren() {
 
-	
+	if(getVertrekUur()-getAankomstUur()>0){
 		setUren(getVertrekUur()-getAankomstUur());
-	
+	}
+	else setUren(1);
 
 	}
 	public boolean isAangekomen(){

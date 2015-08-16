@@ -34,8 +34,8 @@ public class MapDb implements Db {
 		if (user.getNumber() == -1 ) {
 			users.put(-1, user);
 		} else {
-			identifer++;
-			user.setNumber(identifer);
+			//identifer++;
+			//user.setNumber(identifer);
 			users.put(user.getNumber(), user);
 			
 		}

@@ -13,7 +13,10 @@ public interface Db {
 	public List<User> getUsers();
 
 	public void removeUser(User user);
+
 	public void updateUser(User user);
+
 	public void closeConnection();
-public User getUser(int number);
+
+	public User getUser(int number);
 }

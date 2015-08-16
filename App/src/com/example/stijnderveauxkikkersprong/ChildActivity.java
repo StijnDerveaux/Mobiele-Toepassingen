@@ -1,17 +1,33 @@
 package com.example.stijnderveauxkikkersprong;
 
 import service.Facade;
-
+import java.io.InputStreamReader;
+import java.io.BufferedReader;
+import org.apache.http.client.ClientProtocolException;
+import java.io.UnsupportedEncodingException;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,6 +38,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -31,7 +48,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+import domain.DbConnector;
 import model.Aanwezigheden;
+import model.Child;
 import android.view.View.OnClickListener;
 
 public class ChildActivity extends ActionBarActivity {
@@ -42,8 +62,10 @@ public class ChildActivity extends ActionBarActivity {
 	private Button aanwezigheden;
 	private Button bedragen;
 	private TextView text;
-	private Aanwezigheden aan;
+	private static Aanwezigheden aan;
 	private TextView file;
+	public static String url = "www.schildershoekje.be/uploadAanwezigheden.php";
+	InputStream is = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +85,17 @@ public class ChildActivity extends ActionBarActivity {
 
 		}
 		if (v.equals(vertrek)) {
+
 			registerVertrek();
 			openDialog("Vertrek");
+			try {
+				uploadAan();
+
+			} catch (IOException | JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 		if (v.equals(aanwezigheden)) {
 
@@ -122,16 +153,15 @@ public class ChildActivity extends ActionBarActivity {
 		Intent in = getIntent();
 		number = in.getIntExtra("number", 0);
 
-		file=(TextView)findViewById(R.id.lblFile);
-		try {
-			file.setText(readFile());
-		} catch (IOException | JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		file = (TextView) findViewById(R.id.lblFile);
+		file.setText(Integer.toString(facade.getAantalKeer()));
+
+		/*
+		 * try { file.setText(readFile()); } catch (IOException | JSONException
+		 * e) { // TODO Auto-generated catch block e.printStackTrace(); }
+		 */
 		// File f = getFilesDir();
 		// String path = f.getAbsolutePath();
-
 
 	}
 
@@ -153,7 +183,7 @@ public class ChildActivity extends ActionBarActivity {
 		Date d1 = new Date(Calendar.getInstance().getTimeInMillis());
 		aan = new Aanwezigheden(d1);
 		try {
-			createFile(2, aan);
+			createFile(number, aan);
 		} catch (JSONException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -162,21 +192,16 @@ public class ChildActivity extends ActionBarActivity {
 
 	private void registerVertrek() {
 
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/M/yyyy hh:mm:ss");
-		Date date1 = null;
-		try {
-			date1 = simpleDateFormat.parse("14/08/2015 21:5:10");
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Date date1 = new Date(Calendar.getInstance().getTimeInMillis());
+
 		aan.setVertrek(date1);
 		try {
-			createFile(2, aan);
+			createFile(number, aan);
 		} catch (JSONException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		aan = null;
 	}
 
 	public void createFile(int number, Aanwezigheden aan) throws JSONException, IOException {
@@ -189,7 +214,7 @@ public class ChildActivity extends ActionBarActivity {
 			for (String file : files) {
 				if (file.equals("myfile")) {
 					// file exits
-				
+
 					FileInputStream fis = openFileInput("myfile");
 					BufferedInputStream bis = new BufferedInputStream(fis);
 					StringBuffer b = new StringBuffer();
@@ -213,6 +238,7 @@ public class ChildActivity extends ActionBarActivity {
 									aan.getAankomstUur(), aan.getVertrekUur());
 							data.put(aanwezigheid);
 							komtVoor = true;
+
 						} else {
 							aanwezigheid = new JSONObject();
 							aanwezigheid = fillAanwezigheidJsonObject(num, m, dag, aankomst, vertrek);
@@ -254,37 +280,126 @@ public class ChildActivity extends ActionBarActivity {
 		return aanwezigheid;
 	}
 
-	public String readFile() throws IOException, JSONException {
-		FileInputStream fis = openFileInput("myfile");
-		BufferedInputStream bis = new BufferedInputStream(fis);
-		StringBuffer b = new StringBuffer();
+	public Boolean readFileAanwezig(int num) throws IOException, JSONException {
 
-		while (bis.available() != 0) {
-			char c = (char) bis.read();
-			b.append(c);
+		boolean aanvuld = true;
+		File f = new File("myfile");
+
+		if (f.length() > 0) {
+			FileInputStream fis = openFileInput("myfile");
+			BufferedInputStream bis = new BufferedInputStream(fis);
+			StringBuffer b = new StringBuffer();
+
+			while (bis.available() != 0) {
+				char c = (char) bis.read();
+				b.append(c);
+			}
+			bis.close();
+			fis.close();
+			// ergens tonen...
+			StringBuffer buf = new StringBuffer();
+			JSONArray data = new JSONArray(b.toString());
+			Calendar cal = Calendar.getInstance();
+			int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+			String month = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+			for (int i = 0; i < data.length(); i++) {
+				if ((data.getJSONObject(i).getInt("number") == num)
+						&& (data.getJSONObject(i).getInt("dag") == dayOfMonth)
+						&& (month.toUpperCase().equals(data.getJSONObject(i).getString("month")))) {
+
+					if (data.getJSONObject(i).getInt("aankomst") > data.getJSONObject(i).getInt("vertrek")) {
+						aanvuld = false;
+					}
+
+				}
+			}
 		}
-		bis.close();
-		fis.close();
-		// ergens tonen...
-		StringBuffer buf = new StringBuffer();
-		JSONArray data = new JSONArray(b.toString());
+		return aanvuld;
+	}
 
-		for (int i = 0; i < data.length(); i++) {
+	private void uploadAan() throws IOException, JSONException {
 
-			String month = data.getJSONObject(i).getString("month");
-			buf.append(month + ":");
-			String number = data.getJSONObject(i).getString("number");
-			buf.append(number + ":");
-			String dag = data.getJSONObject(i).getString("dag");
-			buf.append(dag + ":");
-			String aankomst = data.getJSONObject(i).getString("aankomst");
-			buf.append(aankomst + ":");
-			String vertrek = data.getJSONObject(i).getString("vertrek");
-			buf.append(vertrek + "\n");
+		JSONArray data = new JSONArray();
+		JSONObject aanwezigheid;
+		boolean leeg = true;
+		String[] files = fileList();
+		File f = new File("myfile");
+		if (files.length > 0) {
+			for (String file : files) {
+				if (file.equals("myfile")) {
+					FileInputStream fis = openFileInput("myfile");
+					BufferedInputStream bis = new BufferedInputStream(fis);
+					StringBuffer b = new StringBuffer();
+					while (bis.available() != 0) {
+						char c = (char) bis.read();
+						b.append(c);
+					}
+					bis.close();
+					fis.close();
+
+					StringBuffer buf = new StringBuffer();
+					JSONArray datas = new JSONArray(b.toString());
+					for (int i = 0; i < datas.length(); i++) {
+						String m = datas.getJSONObject(i).getString("month");
+						int num = datas.getJSONObject(i).getInt("number");
+						int dag = datas.getJSONObject(i).getInt("dag");
+						int aankomst = datas.getJSONObject(i).getInt("aankomst");
+						int vertrek = datas.getJSONObject(i).getInt("vertrek");
+
+						if (m != null && num > 0 && dag > 0 && vertrek >= aankomst) {
+
+							Child cj = (Child) facade.getUser(num);
+							if (!cj.getAanwezigheden().contains(new Aanwezigheden(dag, m, aankomst, vertrek))) {
+								cj.addAanwezigheid(new Aanwezigheden(dag, m, aankomst, vertrek));
+								final List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
+								nameValuePairList.add(new BasicNameValuePair("nummer", Integer.toString(num)));
+								nameValuePairList.add(new BasicNameValuePair("dag", Integer.toString(dag)));
+								nameValuePairList.add(new BasicNameValuePair("maand", m.toString()));
+								nameValuePairList.add(new BasicNameValuePair("aan", Integer.toString(aankomst)));
+								nameValuePairList.add(new BasicNameValuePair("ver", Integer.toString(vertrek)));
+
+								new AsyncTask<DbConnector, Long, Boolean>() {
+									@Override
+									protected Boolean doInBackground(DbConnector... dbconnectors) {
+										// TODO Auto-generated method stub
+										return dbconnectors[0].uploadAan(nameValuePairList);
+									}
+								}.execute(new DbConnector());
+							}
+						} else {
+
+							aanwezigheid = fillAanwezigheidJsonObject(number, aan.getMaand().toString(), aan.getDag(),
+									aan.getAankomstUur(), aan.getVertrekUur());
+							data.put(aanwezigheid);
+							leeg = false;
+						}
+
+					}
+
+					if (leeg) {
+						// File f = new File("myfile");
+						deleteFile("myfile");
+					} else {
+						String text = data.toString();
+						FileOutputStream fos = openFileOutput("myfile", MODE_PRIVATE);
+						fos.write(text.getBytes());
+						fos.flush();
+						fos.close();
+					}
+
+				}
+
+			}
 
 		}
-		String t = buf.toString();
-		return t;
+
+	}
+
+	private boolean komtVoor(Child b, Aanwezigheden q) {
+		boolean komtvoor = false;
+
+		return komtvoor;
+
 	}
 
 }
