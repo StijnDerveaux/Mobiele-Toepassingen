@@ -33,11 +33,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -64,13 +67,14 @@ public class ChildActivity extends ActionBarActivity {
 	private TextView text;
 	private static Aanwezigheden aan;
 	private TextView file;
-	public static String url = "www.schildershoekje.be/uploadAanwezigheden.php";
+	private String vnaam;
+
 	InputStream is = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		getSupportActionBar().hide();
 		setContentView(R.layout.activity_child);
 
 		initLayoutComponents();
@@ -89,7 +93,11 @@ public class ChildActivity extends ActionBarActivity {
 			registerVertrek();
 			openDialog("Vertrek");
 			try {
-				uploadAan();
+				if (haveNetworkConnection()) {
+					aanwezigheden.setEnabled(true);
+					bedragen.setEnabled(true);
+					uploadAan();
+				}
 
 			} catch (IOException | JSONException e) {
 				// TODO Auto-generated catch block
@@ -136,7 +144,13 @@ public class ChildActivity extends ActionBarActivity {
 	}
 
 	private void openDialog(String tekst) {
-		String naam = facade.getVoornaam(facade.getUser(number));
+		String naam = "";
+		if (haveNetworkConnection()) {
+			naam = facade.getVoornaam(facade.getUser(number));
+		} else {
+			naam = vnaam;
+		}
+
 		CustomDialogClass cdd = new CustomDialogClass(ChildActivity.this, naam, tekst);
 		cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 		cdd.show();
@@ -152,31 +166,15 @@ public class ChildActivity extends ActionBarActivity {
 
 		Intent in = getIntent();
 		number = in.getIntExtra("number", 0);
+		vnaam = in.getStringExtra("voornaam");
 
-		file = (TextView) findViewById(R.id.lblFile);
-		file.setText(Integer.toString(facade.getAantalKeer()));
+		// file = (TextView) findViewById(R.id.lblFile);
+		// file.setText(Integer.toString(facade.getAantalKeer()));
+		if (!haveNetworkConnection()) {
+			aanwezigheden.setEnabled(false);
+			bedragen.setEnabled(false);
+		}
 
-		/*
-		 * try { file.setText(readFile()); } catch (IOException | JSONException
-		 * e) { // TODO Auto-generated catch block e.printStackTrace(); }
-		 */
-		// File f = getFilesDir();
-		// String path = f.getAbsolutePath();
-
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();
-
-	}
-
-	@Override
-	public void onBackPressed() {
-		super.onBackPressed();
-		Intent intent = new Intent(this, MainActivity.class);
-		startActivity(intent);
-		finish();
 	}
 
 	private void registerAankomst() {
@@ -184,6 +182,7 @@ public class ChildActivity extends ActionBarActivity {
 		aan = new Aanwezigheden(d1);
 		try {
 			createFile(number, aan);
+
 		} catch (JSONException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -196,6 +195,7 @@ public class ChildActivity extends ActionBarActivity {
 
 		aan.setVertrek(date1);
 		try {
+
 			createFile(number, aan);
 		} catch (JSONException | IOException e) {
 			// TODO Auto-generated catch block
@@ -351,6 +351,7 @@ public class ChildActivity extends ActionBarActivity {
 							Child cj = (Child) facade.getUser(num);
 							if (!cj.getAanwezigheden().contains(new Aanwezigheden(dag, m, aankomst, vertrek))) {
 								cj.addAanwezigheid(new Aanwezigheden(dag, m, aankomst, vertrek));
+								facade.updateUser(cj);
 								final List<NameValuePair> nameValuePairList = new ArrayList<NameValuePair>();
 								nameValuePairList.add(new BasicNameValuePair("nummer", Integer.toString(num)));
 								nameValuePairList.add(new BasicNameValuePair("dag", Integer.toString(dag)));
@@ -395,11 +396,35 @@ public class ChildActivity extends ActionBarActivity {
 
 	}
 
-	private boolean komtVoor(Child b, Aanwezigheden q) {
-		boolean komtvoor = false;
+	@Override
+	public void onResume() {
+		super.onResume();
 
-		return komtvoor;
+	}
 
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		Intent intent = new Intent(this, MainActivity.class);
+		startActivity(intent);
+		finish();
+	}
+
+	private boolean haveNetworkConnection() {
+		boolean haveConnectedWifi = false;
+		boolean haveConnectedMobile = false;
+
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+		for (NetworkInfo ni : netInfo) {
+			if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+				if (ni.isConnected())
+					haveConnectedWifi = true;
+			if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+				if (ni.isConnected())
+					haveConnectedMobile = true;
+		}
+		return haveConnectedWifi || haveConnectedMobile;
 	}
 
 }

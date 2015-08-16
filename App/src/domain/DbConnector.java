@@ -188,7 +188,7 @@ public class DbConnector {
     }
 	public Boolean uploadAan(List<NameValuePair> params) {
 
-        // URL for getting all customers
+      
         String url = "http://www.schildershoekje.be/uploadAanwezigheden.php";
 
 

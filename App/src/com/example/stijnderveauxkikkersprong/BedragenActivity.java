@@ -29,7 +29,7 @@ public class BedragenActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		getSupportActionBar().hide();
 		setContentView(R.layout.activity_bedragen);
 		facade = Facade.getInstance();
 		initLayoutComponents();
@@ -83,7 +83,7 @@ public class BedragenActivity extends ActionBarActivity {
 			TableRow tbrow = new TableRow(this);
 			TextView t1v = new TextView(this);
 			
-			t1v.setText(b.getMaand().toString());
+			t1v.setText(b.getMaand().getMonth().toString());
 
 			t1v.setGravity(Gravity.CENTER);
 			tbrow.addView(t1v);

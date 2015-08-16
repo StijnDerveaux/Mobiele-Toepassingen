@@ -1,15 +1,15 @@
 package model;
 
 public enum Month {
-	JANUARY(31), FEBRUARY(29), MARCH(31), APRIL(30), MAY(31), JUNE(30), JULY(31), AUGUST(
-			31), SEPTEMBER(30), OCTOBER(31), NOVEMBER(30), DECEMBER(31);
-	private int nbrOfDays;
+	JANUARY("Januari"), FEBRUARY("Februari"), MARCH("Maart"), APRIL("April"), MAY("Mei"), JUNE("Juni"), JULY("Juli"), AUGUST(
+			"Augustus"), SEPTEMBER("September"), OCTOBER("Oktober"), NOVEMBER("November"), DECEMBER("December");
+	private String nbrOfDays;
 
-	private Month(int nbrOfDays) {
+	private Month(String nbrOfDays) {
 		this.nbrOfDays = nbrOfDays;
 	}
 
-	public int getNbrOfDays() {
+	public String getMonth() {
 		return nbrOfDays;
 	}
 	

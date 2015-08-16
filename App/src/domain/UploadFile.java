@@ -11,22 +11,26 @@ import com.dropbox.client2.exception.DropboxException;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
+import model.Bedragen;
+import model.Child;
+import model.User;
+import service.Facade;
 
 public class UploadFile extends AsyncTask<Void, Void, Boolean> {
 
-	
 	private DropboxAPI<?> dropbox;
 	private String path;
 	private Context context;
 	private String soort;
+	private Facade facade=Facade.getInstance();
 
-	public UploadFile(Context context, DropboxAPI<?> dropbox,
-			String path,String soort) {
+	public UploadFile(Context context, DropboxAPI<?> dropbox, String path, String soort) {
 		this.context = context.getApplicationContext();
 		this.dropbox = dropbox;
 		this.path = path;
-		this.soort=soort;
+		this.soort = soort;
 	}
+
 	@Override
 	protected Boolean doInBackground(Void... params) {
 		final File tempDir = context.getCacheDir();
@@ -35,18 +39,30 @@ public class UploadFile extends AsyncTask<Void, Void, Boolean> {
 		try {
 			tempFile = File.createTempFile("file", ".txt", tempDir);
 			fr = new FileWriter(tempFile);
-			fr.write("Dit is een document ");
-			fr.close();
-
-			FileInputStream fileInputStream = new FileInputStream(tempFile);
-			if(soort.equals("factuur")){
+			fr.write("Dit is een factuur of aanmaning" + "\n");
+			
+			for(User d:facade.getUsers()){
+				Child c=(Child)d;
+				for(Bedragen b:c.getBedragen()){
+					if(!b.isBetaald()){
+						fr.write(c.getNaam() + " "+ c.getVoornaam() + " maand: " +b.getMaand() + " bedrag: "+ b.getBedrag()+ "\n");
+						
+					}
+				}
 				
-			dropbox.putFile(path + "factuur.txt", fileInputStream,
-					tempFile.length(), null, null);}
-			else {
-				dropbox.putFile(path + "aanmaning.txt", fileInputStream,
-						tempFile.length(), null, null);
 			}
+			
+			
+			
+			fr.close();
+			FileInputStream fileInputStream = new FileInputStream(tempFile);
+			if (soort.equals("factuur")) {
+				
+				dropbox.putFile(path + "factuur.txt", fileInputStream, tempFile.length(), null, null);
+			} else {
+				dropbox.putFile(path + "aanmaning.txt", fileInputStream, tempFile.length(), null, null);
+			}
+			
 			tempFile.delete();
 			return true;
 		} catch (IOException e) {
@@ -61,11 +77,9 @@ public class UploadFile extends AsyncTask<Void, Void, Boolean> {
 	@Override
 	protected void onPostExecute(Boolean result) {
 		if (result) {
-			Toast.makeText(context, "File Uploaded Sucesfully!",
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(context, "File Uploaded Sucesfully!", Toast.LENGTH_LONG).show();
 		} else {
-			Toast.makeText(context, "Failed to upload file", Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(context, "Failed to upload file", Toast.LENGTH_LONG).show();
 		}
 	}
 }

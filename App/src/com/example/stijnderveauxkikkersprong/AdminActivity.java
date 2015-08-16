@@ -14,9 +14,12 @@ import com.dropbox.client2.session.AppKeyPair;
 import com.dropbox.client2.session.Session.AccessType;
 import com.dropbox.client2.session.TokenPair;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -50,20 +53,23 @@ public class AdminActivity extends ActionBarActivity implements View.OnClickList
 	private final static String DROPBOX_DIR = "/files/";
 	private final static String DROPBOX_NAME = "dropbox_prefs";
 	private final static AccessType ACCESS_TYPE = AccessType.DROPBOX;
-	private boolean isLoggedIn = false;;
+	private boolean isLoggedIn = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		getSupportActionBar().hide();
 		setContentView(R.layout.activity_admin);
 		// We create a new AuthSession so that we can use the Dropbox API.
+		if (haveNetworkConnection()) {
+			initLayoutComponents();
+		} else {
+			Toast.makeText(getApplicationContext(), "Een admin heeft netwerk connectie nodig! Log in op een netwerk",
+					Toast.LENGTH_LONG).show();
+			onBackPressed();
+		}
 
-		initLayoutComponents();
-		
-		 
 	}
-
 
 	@SuppressWarnings("deprecation")
 	public void onClick(View v) {
@@ -78,14 +84,14 @@ public class AdminActivity extends ActionBarActivity implements View.OnClickList
 
 		}
 		if (v.equals(factuur)) {
-			UploadFile fac = new UploadFile(this, mDBApi, DROPBOX_DIR,"factuur");
+			UploadFile fac = new UploadFile(this, mDBApi, DROPBOX_DIR, "factuur");
 			fac.execute();
-			
+
 		}
 		if (v.equals(aanmaning)) {
-			UploadFile fac = new UploadFile(this, mDBApi, DROPBOX_DIR,"aanmaning");
+			UploadFile fac = new UploadFile(this, mDBApi, DROPBOX_DIR, "aanmaning");
 			fac.execute();
-			
+
 		}
 
 		if (v.getId() > 0) {
@@ -151,7 +157,7 @@ public class AdminActivity extends ActionBarActivity implements View.OnClickList
 
 		mDBApi = new DropboxAPI(session);
 		// setLoggedIn(isLoggedIn);
-		
+
 		setLoggedIn(mDBApi.getSession().isLinked());
 	}
 
@@ -212,7 +218,6 @@ public class AdminActivity extends ActionBarActivity implements View.OnClickList
 		factuur.setEnabled(isLoggedIn);
 		aanmaning.setEnabled(isLoggedIn);
 		login.setText(isLoggedIn ? "Logout" : "Log in ");
-		
 
 	}
 
@@ -238,6 +243,23 @@ public class AdminActivity extends ActionBarActivity implements View.OnClickList
 				Toast.makeText(this, "Error during dropbox auth", Toast.LENGTH_SHORT).show();
 			}
 		}
+	}
+
+	private boolean haveNetworkConnection() {
+		boolean haveConnectedWifi = false;
+		boolean haveConnectedMobile = false;
+
+		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+		for (NetworkInfo ni : netInfo) {
+			if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+				if (ni.isConnected())
+					haveConnectedWifi = true;
+			if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+				if (ni.isConnected())
+					haveConnectedMobile = true;
+		}
+		return haveConnectedWifi || haveConnectedMobile;
 	}
 
 	@Override

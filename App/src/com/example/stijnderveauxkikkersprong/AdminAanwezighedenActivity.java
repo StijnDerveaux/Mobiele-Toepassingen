@@ -27,7 +27,7 @@ public class AdminAanwezighedenActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		getSupportActionBar().hide();
 		setContentView(R.layout.activity_admin_aanwezigheden);
 		initLayoutComponents();
 
@@ -80,7 +80,7 @@ Child c=(Child)facade.getUser(number);
 			TableRow tbrow = new TableRow(this);
 			TextView t1v = new TextView(this);
 			
-			t1v.setText(aan.getDag()+ " " + aan.getMaand());
+			t1v.setText(aan.getDag()+ " " + aan.getMaand().getMonth());
 
 			t1v.setGravity(Gravity.CENTER);
 			tbrow.addView(t1v);
